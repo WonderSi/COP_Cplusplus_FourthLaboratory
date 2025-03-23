@@ -1,0 +1,10 @@
+# ninja log v5
+1	309	7637201252124860	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/main.cpp.obj	1cb0884167dba559
+3	387	7637226091759579	build.ninja	8922ae385d16912e
+0	4139	7637206511131820	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/interfaces.cpp.obj	e7d8271df216f936
+10	329	7637206472759560	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/main.cpp.obj	8a943194a297f69f
+5	4169	7637206511466125	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/1/main.cpp.obj	4681094fa15a00db
+16	232	7644296371590085	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/1/main.cpp.obj	4681094fa15a00db
+42	4946	7644296418648422	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/main.cpp.obj	8a943194a297f69f
+38	4964	7644296418648422	CMakeFiles/COP_Cplusplus_FourthLaboratory.dir/examples/interfaces.cpp.obj	e7d8271df216f936
+4965	5598	7644296425379300	COP_Cplusplus_FourthLaboratory.exe	628bf834698cf1aa
