@@ -54,11 +54,18 @@ int main () {
         cout << "Клиент: невозможно получить указатель на IY через IX" << endl;
     }
 
-    if (pIX) pIX->Release();
-    if (pIY) pIY->Release();
-    if (pIUnknown) pIUnknown->Release();
+    cout << "\nКлиент: получить указатель на IUnknown через IY" << endl;
+    IUnknown *pIUnknownFromIY = NULL;
+    hr = pIY->QueryInterface(IID_IUnknown1, (void **) &pIUnknownFromIY);
+    if (SUCCEEDED(hr)) {
+        cout << "Равны два ли два указателя?" << endl;
+        if (pIUnknownFromIY == pIUnknown) {
+            cout << "ДА" << endl;
+        } else {
+            cout << "НЕТ" << endl;
+        }
+    }
 
-    
     cout << "\nКлиент: проверить, являются ли IX и IY одним и тем же объектом" << endl;
     if (SameComponents(pIX, pIY)) {
         cout << "Клиент: IX и IY указывают на один и тот же объект" << endl;
@@ -71,6 +78,20 @@ int main () {
 
     cout << "\nКлиент: вызвать функцию f2(IX*)" << endl;
     f2(pIX); // Вызов функции f2
+
+    if (pIX) pIX->Release();
+    if (pIY) pIY->Release();
+    if (pIUnknown) pIUnknown->Release();
+
+    pIX = NULL;
+    pIY = NULL;
+    pIUnknown = NULL;
+
+    if (pIUnknownFromIY) pIUnknownFromIY->Release();
+    pIUnknownFromIY = NULL;
+
+    if (pIYfromIX) pIYfromIX->Release();
+    pIYfromIX = NULL;
 
     return 0;
 };

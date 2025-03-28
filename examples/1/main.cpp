@@ -5,6 +5,7 @@
 //#include <iostream>
 //#include <unknwn.h>
 //#include <objbase.h>
+//#include <cassert>
 //
 //using namespace std;
 //
@@ -31,7 +32,7 @@
 //         {0xa6, 0xbb, 0x0, 0x80, 0xc7, 0xb2, 0xd6, 0x82}};
 //
 //// {32bb8323-b41b-11cf-a6bb-0080c7b2d682}
-//const IID IID_IUnknow1 =
+//const IID IID_IUnknown1 =
 //        {0x32bb8323, 0xb41b, 0x11cf,
 //         {0xa6, 0xbb, 0x0, 0x80, 0xc7, 0xb2, 0xd6, 0x82}};
 //
@@ -87,6 +88,68 @@
 //    return pI;
 //}
 //
+//BOOL SameComponents(IX* pIX, IY* pIY) {
+//    IUnknown* pI1 = NULL;
+//    IUnknown* pI2 = NULL;
+//
+//    // Получить указатель на IUnknown через pIX
+//    pIX->QueryInterface(IID_IUnknown1, (void**)&pI1);
+//
+//    // Получить указатель на IUnknown через pIY
+//    pIY->QueryInterface(IID_IUnknown1, (void**)&pI2);
+//
+//    // Сравнить полученные указатели
+//    return pI1 == pI2;
+//}
+//
+//// Новая функция f
+//void f(IX* pIX) {
+//    IX* pIX2 = NULL;
+//    HRESULT hr = pIX->QueryInterface(IID_IX, (void**)&pIX2);
+//    assert(SUCCEEDED(hr)); // Запрос должен быть успешным
+//}
+//
+//void f2(IX* pIX) {
+//    HRESULT hr;
+//
+//    IX* pIX2 = NULL;
+//    IY* pIY = NULL;
+//
+//    // Получить IY через IX
+//    hr = pIX->QueryInterface(IID_IY, (void**)&pIY);
+//    if (SUCCEEDED(hr)) {
+//        // Получить IX через IY
+//        hr = pIY->QueryInterface(IID_IX, (void**)&pIX2);
+//
+//        // QueryInterface должна отработать успешно
+//        assert(SUCCEEDED(hr));
+//    }
+//}
+//
+//// Реализация функции f3
+//void f3(IX* pIX) {
+//    HRESULT hr;
+//
+//    IY* pIY = NULL;
+//
+//    // Запросить IY у IX
+//    hr = pIX->QueryInterface(IID_IY, (void**)&pIY);
+//
+//    if (SUCCEEDED(hr)) {
+//        IZ* pIZ = NULL;
+//
+//        // Запросить IZ у IY
+//        hr = pIY->QueryInterface(IID_IZ, (void**)&pIZ);
+//
+//        if (SUCCEEDED(hr)) {
+//            // Запросить IZ у IX
+//            hr = pIX->QueryInterface(IID_IZ, (void**)&pIZ);
+//
+//            assert(SUCCEEDED(hr)); // Это должно работать
+//        }
+//    }
+//}
+//
 //
 //// Клиент
 //int main() {
@@ -133,9 +196,44 @@
 //        cout << "Клиент: невозможно получить указатель на IY через IX" << endl;
 //    }
 //
+//    cout << "\nКлиент: получить указатель на IUnknown через IY" << endl;
+//    IUnknown *pIUnknownFromIY = NULL;
+//    hr = pIY->QueryInterface(IID_IUnknown1, (void **) &pIUnknownFromIY);
+//    if (SUCCEEDED(hr)) {
+//        cout << "Равны два ли два указателя?" << endl;
+//        if (pIUnknownFromIY == pIUnknown) {
+//            cout << "ДА" << endl;
+//        } else {
+//            cout << "НЕТ" << endl;
+//        }
+//    }
+//
+//    cout << "\nКлиент: проверить, являются ли IX и IY одним и тем же объектом" << endl;
+//    if (SameComponents(pIX, pIY)) {
+//        cout << "Клиент: IX и IY указывают на один и тот же объект" << endl;
+//    } else {
+//        cout << "Клиент: IX и IY указывают на разные объекты" << endl;
+//    }
+//
+//    cout << "\nКлиент: вызвать функцию f(IX*)" << endl;
+//    f(pIX); // Вызов функции f
+//
+//    cout << "\nКлиент: вызвать функцию f2(IX*)" << endl;
+//    f2(pIX); // Вызов функции f2
+//
 //    if (pIX) pIX->Release();
 //    if (pIY) pIY->Release();
 //    if (pIUnknown) pIUnknown->Release();
+//
+//    pIX = NULL;
+//    pIY = NULL;
+//    pIUnknown = NULL;
+//
+//    if (pIUnknownFromIY) pIUnknownFromIY->Release();
+//    pIUnknownFromIY = NULL;
+//
+//    if (pIYfromIX) pIYfromIX->Release();
+//    pIYfromIX = NULL;
 //
 //    return 0;
 //}
