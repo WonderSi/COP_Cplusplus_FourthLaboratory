@@ -79,19 +79,8 @@ int main () {
     cout << "\nКлиент: вызвать функцию f2(IX*)" << endl;
     f2(pIX); // Вызов функции f2
 
-    if (pIX) pIX->Release();
-    if (pIY) pIY->Release();
-    if (pIUnknown) pIUnknown->Release();
-
-    pIX = NULL;
-    pIY = NULL;
-    pIUnknown = NULL;
-
-    if (pIUnknownFromIY) pIUnknownFromIY->Release();
-    pIUnknownFromIY = NULL;
-
-    if (pIYfromIX) pIYfromIX->Release();
-    pIYfromIX = NULL;
+    // Удалить компонент
+    delete pIUnknown;
 
     return 0;
 };
